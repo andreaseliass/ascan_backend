@@ -1,9 +1,14 @@
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
+var mysql = require('mysql');
+
+var connection = mysql.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : 'example',
-  database : 'dbbackend'
+  password : '123456',
+  database : 'dbbackend',
+  port: '3307'
 });
  
-connection.connect();
+connection.getConnection();
+// connection.connect();
+
+module.exports = connection;

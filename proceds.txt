@@ -1,0 +1,10 @@
+docker ps pra ver se já está up,se não aparecer nada dar o comando docker ps -a pra mostrar os que estão parados e o comando:
+
+docker-compose up -d 
+
+pra subir
+
+docker exec -it projetobackend-db-1 bash -l
+
+mysql -u root -p
+

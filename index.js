@@ -1,4 +1,5 @@
 const express = require('express');
+const connection = require('./database');
 
 const app = express();
 
@@ -6,14 +7,12 @@ app.use(express.json());
 
 const subscriptions = {};
 
-app.post('/subscriptions', (req, res) =>{
+app.post('/subscriptions', async (req, res) =>{
     const { user_id, status_id } = req.body;
 
-    subscriptions[status_id] = {
-        user_id, status_id
-    };
+    const result = await connection.query('INSERT INTO subscription (user_id, status_id) VALUES(?,?)', [user_id, status_id]);
 
-    return res.status(201).send(subscriptions[status_id]);
+    return res.status(201).json(result);
 });
 
 app.listen(3000, () => {
