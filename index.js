@@ -1,20 +1,29 @@
 const express = require('express');
-const connection = require('./database');
+const dataSource = require('./database');
 
 const app = express();
 
 app.use(express.json());
 
-const subscriptions = {};
+dataSource
+  .initialize()
+  .then(function () {
 
-app.post('/subscriptions', async (req, res) =>{
-    const { user_id, status_id } = req.body;
+    app.post('/users', async (req, res) =>{
+        const { full_name } = req.body;
+        const UsersRepository = dataSource.getRepository('User')
 
-    const result = await connection.query('INSERT INTO subscription (user_id, status_id) VALUES(?,?)', [user_id, status_id]);
+        const result = UsersRepository.create({full_name});
 
-    return res.status(201).json(result);
-});
+        await UsersRepository.save();
 
-app.listen(3000, () => {
-    console.log('Listening on 3000');
+        return nres.status(201).json(result);
+    });
+
+    app.listen(3000, () => {
+        console.log('Listening on 3000');
+    })
 })
+.catch(function (error) {
+  console.log('Error: ', error);
+});

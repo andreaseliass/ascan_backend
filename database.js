@@ -1,14 +1,13 @@
-var mysql = require('mysql');
+var typeorm = require("typeorm")
 
-var connection = mysql.createPool({
-  host     : 'localhost',
-  user     : 'root',
-  password : '123456',
-  database : 'dbbackend',
-  port: '3307'
-});
- 
-connection.getConnection();
-// connection.connect();
+var dataSource = new typeorm.DataSource({
+    type: "mysql",
+    host: "localhost",
+    port: 3307,
+    username: "root",
+    password: "example",
+    database: "dbbackend",
+    entities: [require("./entity/User")],
+})
 
-module.exports = connection;
+module.exports = dataSource;
